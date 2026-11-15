@@ -13,6 +13,12 @@ Browser game client. Vite + TypeScript + Pixi.js (`pixi.js` is the only runtime 
 
 If `node_modules` is missing, install with `npm ci`. Run `npm run check` (`typecheck`, `lint`, and `build`) before every push (`build` is `vite build`, which doesn't typecheck, and it's what Netlify runs). If they can't run (no network for installs), say so in the report instead of skipping silently.
 
+## Testing
+
+- Test behaviour that can break: rules, edge cases, timing, wiring between parts. Don't write tests that restate a constant, a data table or a one-line mapping.
+- While working, run only the tests that cover what changed. Run long suites (the full end-to-end run, every device) once, when the task is mostly done.
+- Tag tests that take over about 10 s as `@slow`, with a script that skips them, so iterating stays fast.
+
 ## Ask, don't assume
 
 - If a request is ambiguous or can be read two ways, ask before acting. Don't guess scope, names, or intent.
@@ -68,6 +74,7 @@ If `node_modules` is missing, install with `npm ci`. Run `npm run check` (`typec
 
 - Show only changed code unless asked for the full file. Flag risks: performance, breaking changes, browser compatibility.
 - Match the existing code style. This codebase is shared by engineers of different levels, so when styles conflict, ask, and prefer the style written by Stefan (the owner, `stefanhacks`).
+  - Functions are `const` arrow functions, and object members that are functions are arrow-function properties (`{ update: () => { … } }`), not method shorthand (`{ update() { … } }`). Class methods stay as they are.
 - Don't invent APIs, config options, or library functions. If unsure something exists, say so.
 - Don't add dependencies without stating the trade-off first. Prefer not adding any.
 - Watch for machine-written code in the repo; it may be outdated or written under weak instructions. Verify before building on it.
@@ -82,4 +89,5 @@ If `node_modules` is missing, install with `npm ci`. Run `npm run check` (`typec
   - `wip:` commits while the PR is a draft.
   - `add:` commits after the PR leaves draft that fit none of the prefixes below.
   - `fix:` commits focused only on hotfixes and tests.
-  - `pcr:` commits added after a review (post code review).
+  - `pcr:` commits added after a review (post code review), including fixes from reviewing agents. Applies whether or not the PR is a draft.
+  - `mrg:` the squash-merge commit on `main`, titled after the PR with its number, e.g. `mrg: auto delete branches (#3)`.
