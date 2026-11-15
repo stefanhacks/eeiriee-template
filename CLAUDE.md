@@ -28,7 +28,7 @@ If `node_modules` is missing, install with `npm ci`. Run `npm run check` (`typec
 ## Git workflow
 
 - Never commit or push to `main`. Always work on a branch.
-- Branch names are flat, lowercase, hyphenated, with no slashes, and start with `cl-`: `cl-fix-spin-button`, not `fix/spin-button`. Netlify turns the branch name into the preview URL.
+- Branch names are flat, lowercase, hyphenated, with no slashes, and start with `cl-`: `cl-fix-spin-button`, not `fix/spin-button`. The branch name gives the task name in the answer header.
 - If the session or harness assigns a branch that breaks this rule (e.g. `claude/<something>`), don't push to it. Use a `cl-<task-name>` branch instead.
 - Create new branches from a freshly fetched `origin/main`, never from whatever is checked out, unless the user says otherwise.
 - Push after each requested change.
@@ -54,13 +54,13 @@ If `node_modules` is missing, install with `npm ci`. Run `npm run check` (`typec
 ## Netlify
 
 - Site: `eeiriee`. Config lives in `netlify.toml` (build `npm run build`, publish `dist`, Node 22).
-- Branch preview: `https://<branch>--eeiriee.netlify.app`
+- Deploys go through PRs: branch deploys are not enabled, so only PRs get a preview. There is no `https://<branch>--eeiriee.netlify.app` link.
 - PR preview: `https://deploy-preview-<pr-number>--eeiriee.netlify.app`
 - Production (builds from `main`): `https://eeiriee.netlify.app`
-- Start every answer with a header: the task name and the branch preview link of the current branch, then the GitHub PR link, then a horizontal rule. The task name is the branch name without `cl-`, in title case. Omit the PR line if no PR is open. With no working branch, use the production link. Nothing else in the header: no notes on build status.
+- Start every answer with a header: the task name and the PR preview link of the current branch's PR, then the GitHub PR link, then a horizontal rule. The task name is the branch name without `cl-`, in title case. With a working branch but no open PR yet, use the production link and omit the PR line. With no working branch, use the production link. Nothing else in the header: no notes on build status.
 
   ```md
-  Auto Delete Branches: https://cl-auto-delete-branches--eeiriee.netlify.app
+  Auto Delete Branches: https://deploy-preview-3--eeiriee.netlify.app
 
   PR: https://github.com/stefanhacks/eeiriee/pull/3
 
